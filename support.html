@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support | Remote Health Monitoring</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+        <!-- Top Navigation -->
+        <div class = "top-nav">
+          <a href="#" class="logo">My Health Monitor</a>
+          <ul>
+            <div class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="report.html">Report</a></li>
+            <li><a href="support.html">Support</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="logout.html">Logout</a></li>
+            <div class="user-profile">
+              <img src="Images/profile.jpg" />
+              <span class="username">John Doe</span>
+          </div>
+          </ul>
+        </div>
+    </div>
+<header class="support-header">
+  <h1>Support</h1>
+  <p>How can we assist you today?</p>
+</header>
+
+<main class="support-container">
+  <!-- FAQ Section -->
+  <section class="support-faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="support-faq-item">
+      <h3>How do I reset my password?</h3>
+      <p class="support-faq-answer">
+        Go to the login page, click "Forgot Password," and follow the instructions.</p>
+    </div>
+    <div class="support-faq-item">
+      <h3>Can I update my personal health data?</h3>
+      <p class="support-faq-answer">
+        Yes, navigate to your profile and edit your health details.</p>
+    </div>
+    <!-- Add more FAQ items as needed -->
+  </section>
+
+  <!-- Contact Support Form -->
+  <section class="support-contact">
+    <h2>Contact Support</h2>
+    <form id="support-form">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="message">Your Message:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <!-- Live Chat Placeholder -->
+  <section class="support-live-chat">
+    <h2>Live Chat</h2>
+    <p>Coming soon: Instant support through live chat.</p>
+  </section>
+</main>
+
+<!-- Footer Section -->
+<footer class="footer">
+  <p>&copy; 2025 Health Monitor All Rights Reserved.</p>
+  <a href="#">Privacy Policy</a>
+</footer>
+
+  <script>
+    document.getElementById('support-form').addEventListener('submit', function(event) {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+
+  if (!name || !email || !message) {
+    event.preventDefault(); // Prevent form submission
+    alert('Please fill in all fields.');
+  } else {
+    // Optional: additional validation for email format
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailPattern.test(email)) {
+      event.preventDefault();
+      alert('Please enter a valid email address.');
+    }
+  }
+});
+
+document.querySelector('.support-live-chat h2').addEventListener('click', () => {
+  alert('Live chat feature is coming soon!');
+});
+  </script>
+</body>
+</html>

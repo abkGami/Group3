@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | Remote Health Monitoring</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+      <!-- Top Navigation -->
+      <div class = "top-nav">
+        <a href="#" class="logo">My Health Monitor</a>
+        <ul>
+          <div class="nav-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="report.html">Report</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="settings.html">Settings</a></li>
+          <li><a href="logout.html">Logout</a></li>
+          <div class="user-profile">
+            <img src="Images/profile.jpg"/>
+            <span class="username">John Doe</span>
+        </div>
+        </ul>
+      </div>
+  </div>
+
+<div class="settings-section">
+  <h2>Settings</h2>
+  <form id="settingsForm">
+    <!-- Account Settings -->
+    <div class="settings-group">
+      <h3>Account Settings</h3>
+      <div class="settings-form-group">
+        <label for="changeEmail">Change Email:</label>
+        <input type="email" id="changeEmail" placeholder="Enter new email" />
+      </div>
+      <div class="settings-form-group">
+        <label for="changePassword">Change Password:</label>
+        <input type="password" id="changePassword" placeholder="Enter new password" />
+      </div>
+    </div>
+
+    <!-- Notification Preferences -->
+    <div class="settings-group">
+      <h3>Notification Preferences</h3>
+      <div class="settings-form-group">
+        <label>
+          <input type="checkbox" id="emailNotifications" />
+          Email Notifications
+        </label>
+      </div>
+      <div class="settings-form-group">
+        <label>
+          <input type="checkbox" id="smsNotifications" />
+          SMS Notifications
+        </label>
+      </div>
+    </div>
+
+    <!-- Privacy Settings -->
+    <div class="settings-group">
+      <h3>Privacy Settings</h3>
+      <div class="settings-form-group">
+        <label>
+          <input type="checkbox" id="dataSharing" />
+          Allow sharing of anonymized health data for research
+        </label>
+      </div>
+      <div class="settings-form-group">
+        <label>
+          <input type="checkbox" id="publicProfile" />
+          Make profile visible to public
+        </label>
+      </div>
+    </div>
+
+    <!-- Health Preferences -->
+    <div class="settings-group">
+      <h3>Health Monitoring Preferences</h3>
+      <div class="settings-form-group">
+        <label for="preferredTempUnit">Preferred Temperature Unit:</label>
+        <select id="preferredTempUnit" name="preferredTempUnit">
+          <option value="Celsius">Celsius</option>
+          <option value="Fahrenheit">Fahrenheit</option>
+        </select>
+      </div>
+      <div class="settings-form-group">
+        <label for="preferredHeartRateUnit">Preferred Heart Rate Unit:</label>
+        <select id="preferredHeartRateUnit" name="preferredHeartRateUnit" >
+          <option value="bpm">Beats per minute (bpm)</option>
+          <option value="hz">Hertz (Hz)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Theme Preferences -->
+    <div class="settings-group">
+      <h3>Theme Preferences</h3>
+      <div class="settings-form-group">
+        <label for="themeToggle">
+          <input type="checkbox" id="themeToggle" />
+          Dark Mode
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" id="saveSettings">Save Settings</button>
+  </form>
+</div>
+
+<!-- Footer Section -->
+<footer class="footer">
+  <p>&copy; 2025 Health Monitor All Rights Reserved.</p>
+  <a href="#">Privacy Policy</a>
+</footer>
+
+<script>
+
+// Save Settings Form Submission
+document.getElementById('settingsForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  // Gather settings data
+  const settingsData = {
+    email: document.getElementById('changeEmail').value,
+    password: document.getElementById('changePassword').value,
+    emailNotifications: document.getElementById('emailNotifications').checked,
+    smsNotifications: document.getElementById('smsNotifications').checked,
+    dataSharing: document.getElementById('dataSharing').checked,
+    publicProfile: document.getElementById('publicProfile').checked,
+    preferredTempUnit: document.getElementById('preferredTempUnit').value,
+    preferredHeartRateUnit: document.getElementById('preferredHeartRateUnit').value,
+    darkMode: document.getElementById('themeToggle').checked,
+  };
+
+  // Save to localStorage or send to backend API
+  localStorage.setItem('userSettings', JSON.stringify(settingsData));
+
+  // Apply dark mode if enabled
+  if (settingsData.darkMode) {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
+  }
+
+  alert('Settings saved successfully!');
+});
+
+// Load Settings on Page Load
+document.addEventListener('DOMContentLoaded', function () {
+  const savedSettings = JSON.parse(localStorage.getItem('userSettings'));
+  if (savedSettings) {
+    document.getElementById('changeEmail').value = savedSettings.email || '';
+    document.getElementById('changePassword').value = savedSettings.password || '';
+    document.getElementById('emailNotifications').checked = savedSettings.emailNotifications || false;
+    document.getElementById('smsNotifications').checked = savedSettings.smsNotifications || false;
+    document.getElementById('dataSharing').checked = savedSettings.dataSharing || false;
+    document.getElementById('publicProfile').checked = savedSettings.publicProfile || false;
+    document.getElementById('preferredTempUnit').value = savedSettings.preferredTempUnit || 'Celsius';
+    document.getElementById('preferredHeartRateUnit').value = savedSettings.preferredHeartRateUnit || 'bpm';
+    document.getElementById('themeToggle').checked = savedSettings.darkMode || false;
+    
+   // Check if dark mode is enabled from localStorage when the page loads
+window.onload = function() {
+    if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark-mode");
+    }
+};
+
+// Add interactivity for theme toggle (e.g., a checkbox or button)
+document.getElementById('themeToggle').addEventListener('change', function() {
+    if (this.checked) {
+        // Enable dark mode
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("darkMode", "enabled");  // Store the preference
+    } else {
+        // Disable dark mode
+        document.body.classList.remove("dark-mode");
+        localStorage.removeItem("darkMode");  // Remove the preference
+    }
+  })
+}
+});
+
+
+  </script>
+</body>
+</html>

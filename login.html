@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header-container">
+        <header class="header">
+            <h1>Welcome to Your <span>Health Monitor</span></h1>
+            <p>Your Companion in Remote Health Care</p>
+        </header>
+    </div>
+
+    <!-- Sign In/Sign Up Section -->
+    <div class="container">
+        <div class="sign-form-container">
+            <div class="sign-form-toggle">
+                <button id="signInButton">Sign In</button>
+                <button id="signUpButton">Sign Up</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="signInForm" action="dashboard.html" method="POST">
+                <h2>Sign In</h2>
+                <div class="sign-form-group">
+                    <label for="signInUsername">Username</label>
+                    <input type="text" id="signInUsername" placeholder="Enter your username" required />
+                </div>
+                <div class="sign-form-group">
+                    <label for="signInPassword">Password</label>
+                    <input type="password" id="signInPassword" placeholder="Enter your password" required />
+                    <div id="password-error" class="error-message"></div>
+                    <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+                </div>
+                <button class="submit-btn">Sign In</button>
+                <p id="signInError" class="error-message"></p>
+            </form>
+
+            <!-- Forgot Password Modal -->
+            <div id="forgotPasswordForm" class="hidden">
+                <h2>Forgot Password</h2>
+                <p>Enter your email address to reset your password.</p>
+                <label for="forgotEmail">Email:</label>
+                <input type="email" id="forgotEmail" placeholder="sample@example.com" required />
+                <button class="submit-btn" id="resetPasswordButton">Submit</button>
+                <a href="#" id="backToSignIn">Back to Sign In</a>
+            </div>
+
+            <!-- Sign Up Form -->
+            <form id="signUpForm" class="hidden">
+                <h2>Sign Up</h2>
+                <div class="sign-form-group">
+                    <label for="signUpUsername">Username</label>
+                    <input type="text" id="signUpUsername" placeholder="Choose a username" required />
+                </div>
+                <div class="sign-form-group">
+                    <label for="signUpEmail">Email</label>
+                    <input type="email" id="signUpEmail" placeholder="Enter your email" required />
+                </div>
+                <div class="sign-form-group">
+                    <label for="signUpPassword">Password</label>
+                    <input type="password" id="signUpPassword" placeholder="Create a password" required />
+                </div>
+                <button class="submit-btn">Sign Up</button>
+                <div id="signUpError" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2025 Health Monitor All Rights Reserved.</p>
+        <a href="#">Privacy Policy</a>
+    </footer>
+
+    <script>
+
+// Form toggling
+const signInButton = document.getElementById("signInButton");
+const signUpButton = document.getElementById("signUpButton");
+const signInForm = document.getElementById("signInForm");
+const signUpForm = document.getElementById("signUpForm");
+const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+const backToSignIn = document.getElementById("backToSignIn");
+
+// Toggle between Sign In and Sign Up forms
+document.getElementById("signInForm").classList.add("hidden");
+document.getElementById("signUpForm").classList.add("hidden");
+
+signInButton.addEventListener("click", () => {
+    signInForm.classList.remove("hidden");
+    signUpForm.classList.add("hidden");
+    forgotPasswordForm.classList.add("hidden");
+});
+
+signUpButton.addEventListener("click", () => {
+    signUpForm.classList.remove("hidden");
+    signInForm.classList.add("hidden");
+    forgotPasswordForm.classList.add("hidden");
+});
+
+// Show Forgot Password form
+forgotPasswordLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    forgotPasswordForm.classList.remove("hidden");
+    signInForm.classList.add("hidden");
+});
+
+// Back to Sign In from Forgot Password
+backToSignIn.addEventListener("click", (e) => {
+    e.preventDefault();
+    signInForm.classList.remove("hidden");
+    forgotPasswordForm.classList.add("hidden");
+});   
+    //Validating Your form
+
+    //Sign-Up Validation
+     function validateSignUp () {
+        let isValid = true;
+
+        //Clear previous errors
+
+    document.getElementById('signUpEmailError').innerText = '';
+    document.getElementById('signUpPasswordError').innerText = '';
+    document.getElementById('signUpError').innerText = '';
+
+        //Get Form Values
+    const email = document.getElementById('signUpEmail').value.trim();
+    const password = document.getElementById('signUpPassword').value.trim();
+
+
+    if (!email || ! email.includes('@') || email.includes ('.')) {
+
+       document.getElementById('sgnUpEmailEror').innerText = 
+            'Please enter a valid email address.'; 
+            isValid = false;
+
+         // Password Validation
+    if (!password || password.length < 6) {
+            document.getElementById('signUpPasswordError').innerText = 
+            'Password must be at least 6 characters long.';
+            isValid = false;
+        }
+
+        // Custom Sign-Up Error (e.g., email already exists)
+        if (isValid) {
+            const emailExists = false; // Replace with actual backend check
+            if (emailExists) {
+            document.getElementById('signUpError').innerText = 
+            'Email already exists. Please try a different email.';
+            isValid = false;
+            }
+        }
+
+        return isValid;
+        }
+
+            // Sign-In Validation
+        function validateSignIn() {
+            let isValid = true;
+    
+            // Clear previous errors
+            document.getElementById('signInEmailError').innerText = '';
+            document.getElementById('signInPasswordError').innerText = '';
+            document.getElementById('signInError').innerText = '';
+        
+            // Get form values
+            const email = document.getElementById('signInEmail').value.trim();
+            const password = document.getElementById('signInPassword').value.trim();
+        
+            // Email Validation
+        if (!email || !email.includes('@') || !email.includes('.')) {
+            document.getElementById('signInEmailError').innerText = 'Please enter a valid email address.';
+            isValid = false;
+            }
+    
+            // Password Validation
+         if (!password) {
+            document.getElementById('signInPasswordError').innerText = 'Password is required.';
+            isValid = false;
+            }
+    
+            // Custom Sign-In Error
+            if (isValid) {
+            const credentialsCorrect = false; // Replace with actual backend check
+            if (!credentialsCorrect) {
+                document.getElementById('signInError').innerText = 'Incorrect email or password.';
+                isValid = false;
+              }
+            }
+        
+            return isValid;
+            }
+        };
+
+        document.getElementById("signInForm").addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Get the input values
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // Clear any previous error messages
+            document.getElementById("errorMessage").style.display = 'none';
+            document.getElementById("errorMessage").textContent = '';
+
+            // Form enhancement: Show the spinner and disable the button
+            toggleSpinner(true);
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.disabled = true;
+            
+            // Prepare data for submission
+            const data = { username, email, password };
+            
+            // Send data to the server
+            fetch("https://example.com/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Redirect on success
+                    window.location.href = "dashboard.html";
+                } else {
+                    // Show error message
+                    showError(data.message || "Login failed");
+                }
+            })
+            .catch(error => {
+                // Handle error
+                console.error("Error:", error);
+                showError("An error occurred. Please try again.");
+            })
+            .finally(() => {
+                // Always re-enable the button and hide the spinner after API call
+                toggleSpinner(false);
+                submitBtn.disabled = false;
+            });
+        });
+
+        // Show Error Message
+        function showError(message) {
+            const errorMessage = document.getElementById("errorMessage");
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        // Show or Hide the Spinner
+        function toggleSpinner(show) {
+            const spinner = document.getElementById("spinner");
+            if (show) {
+                spinner.style.display = 'block';
+            } else {
+                spinner.style.display = 'none';
+            }
+        }
+
+        document.getElementById("signInForm").addEventListener("submit", function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            window,location.href = "dashboard.html"; //Redirect to the dashboard
+        });
+         
+    </script>
+</body>
+</html>

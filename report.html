@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Remote Health Monitoring System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+      <!-- Top Navigation -->
+      <div class = "top-nav">
+        <a href="#" class="logo">My Health Monitor</a>
+        <ul>
+          <div class="nav-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="profile.html">Profile</a></li>
+          <li><a href="report.html">Report</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="settings.html">Settings</a></li>
+          <li><a href="logout.html">Logout</a></li>
+          <div class="user-profile">
+            <img src="Images/profile.jpg" />
+            <span class="username">John Doe</span>
+        </div>
+        </ul>
+      </div>
+  </div>
+  
+  <div class="profile-section">
+    <h2 class="profile-title">User Profile</h2>
+    <form id="profileForm">
+      <div class="profile-form-group">
+        <div class="profile-picture-group">
+          <label for="profilePicture" class="profile-label">Profile Picture:</label>
+          <div class="profile-picture-preview" id="profilePicturePreview">
+            <img id="previewImage" src="default-avatar.png"/>
+          </div>
+          <input type="file" id="profilePicture" class="profile-input" accept="image/*" />
+        </div>
+      </div>
+      <div class="profile-form-group">
+        <label for="fullName" class="profile-label">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" class="profile-input" required placeholder="Enter your full name" />
+      </div>
+      <div class="profile-form-group">
+        <label for="email" class="profile-label">Email:</label>
+        <input type="email" id="email" name="email" class="profile-input" required placeholder="Enter your email" />
+      </div>
+      <div class="profile-form-group">
+        <label for="phoneNumber" class="profile-label">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" class="profile-input" required placeholder="Enter your phone number" />
+      </div>
+      <div class="profile-form-group">
+        <label for="age" class="profile-label">Age:</label>
+        <input type="number" id="age" name="age" class="profile-input" required placeholder="Enter your age" />
+      </div>
+      <div class="profile-form-group">
+        <label for="gender" class="profile-label">Gender:</label>
+        <select id="gender" name="gender" class="profile-input" required>
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="profile-form-group">
+        <label for="emergencyContact" class="profile-label">Emergency Contact:</label>
+        <input type="text" id="emergencyContact" name="emergencyContact" class="profile-input" required placeholder="Enter emergency contact" />
+      </div>
+      <div class="profile-form-group">
+        <label for="medicalConditions" class="profile-label">Medical Conditions:</label>
+        <textarea id="medicalConditions" name="medicalConditions" class="profile-input" placeholder="List any medical conditions"></textarea>
+      </div>
+      <button type="submit" id="saveProfile" class="profile-save-button">Save Profile</button>
+    </form>
+  </div>
+
+<!-- Footer Section -->
+<footer class="footer">
+  <p>&copy; 2025 Health Monitor All Rights Reserved.</p>
+  <a href="#">Privacy Policy</a>
+</footer>
+
+<script>
+// Handle Profile Picture Upload
+const profilePictureInput = document.getElementById('profilePicture');
+const previewImage = document.getElementById('previewImage');
+
+profilePictureInput.addEventListener('change', function (e) {
+  const file = e.target.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      previewImage.src = event.target.result; // Update the preview image
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Save the profile picture as part of the profile data
+document.getElementById('profileForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const profilePictureData = previewImage.src; // Get the Base64 of the profile picture
+
+  // Save this along with the other profile details
+  console.log("Profile Picture Saved:", profilePictureData); // Replace this with actual saving logic
+});
+
+// Profile Data Handling
+document.getElementById('profileForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  // Gather user input
+  const profileData = {
+    fullName: document.getElementById('fullName').value,
+    email: document.getElementById('email').value,
+    phoneNumber: document.getElementById('phoneNumber').value,
+    age: document.getElementById('age').value,
+    gender: document.getElementById('gender').value,
+    emergencyContact: document.getElementById('emergencyContact').value,
+    medicalConditions: document.getElementById('medicalConditions').value,
+  };
+
+  // Save to LocalStorage (or send to backend API)
+  localStorage.setItem('userProfile', JSON.stringify(profileData));
+
+  // Update Dashboard Icon
+  updateDashboardProfile(profileData);
+
+  alert('Profile saved successfully!');
+});
+
+// Update Dashboard Profile Icon
+function updateDashboardProfile(data) {
+  const dashboardProfile = document.getElementById('dashboardProfile');
+  if (!dashboardProfile) return;
+
+  dashboardProfile.innerHTML = `
+    <div class="profile-icon">
+      <div class="avatar">${data.fullName[0]}</div>
+      <p>${data.fullName}</p>
+      <small>${data.email}</small>
+    </div>
+  `;
+}
+
+// Load Profile Data on Page Load
+document.addEventListener('DOMContentLoaded', function () {
+  const savedProfile = JSON.parse(localStorage.getItem('userProfile'));
+  if (savedProfile) {
+    updateDashboardProfile(savedProfile);
+  }
+});
+   </script>
+</body>
+</html>
+
