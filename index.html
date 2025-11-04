@@ -1,213 +1,99 @@
 <!DOCTYPE html>
-<html>
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Remote Health Monitoring System</title>
-        <!--Font Awesome CDN-->
-        <link 
-        href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        rel="stylesheet">
-        <!--css style -->
-        <link rel = "stylesheet" href="styles.css">
-    </head>
-
-    <body>
-
-<div class="dashboard-container">
-      <!-- Sidebar -->
-       
-             <!-- Toggle Button (Hamburger Icon) -->
-<button id="togglebtn" class="toggle-btn">
-  &#9776; <!-- Hamburger icon -->
-</button>
-
- <!-- Sidebar Navigation -->
-<div id="sidebar" class="sidebar">
-      <!--Side-bar-Header-->
- <div class="sidebar-header">
-  <h1>My Health Monitor</h1>
-    <div class="user-profile">
-        <img src="Images/profile.jpg" />
-        <span class="username">John Doe</span>
-    </div>
-    </div>
-      <nav class="sidebar-nav">
-  <ul>
-      <!--single link-->
-    <li><a href="index.html" class="nav-link"><i class ="fa-solid fa-house"></i> <span>  Dashboard</a></li></span>
-     <!--end of single link-->
-      <!--single link-->
-     <li><a href="report.html" class="nav-link"><i class ="fa-solid fa-file-lines"></i> <span>  Report</a></li></span>
-       <!--end of single link-->
-      <!--single link-->
-    <li><a href="profile.html" class="nav-link"><i class ="fa-solid fa-user"></i> <span>  Profile</a></li></span>
-      <!--end of single link-->
-      <!--single link-->
-    <li><a href="support.html" class="nav-link"><i class ="fa-solid fa-circle-question"></i> <span>  Support</a></li></span>
-      <!--end of single link-->
-      <!--single link-->
-    <li><a href="settings.html" class="nav-link"><i class ="fa-solid fa-gear"></i> <span>  Settings</a></li></span>
-     <!--end of single link-->
-  </ul>
-  <!--Logout section-->
-  <ul>
-<li class="sidebar-logout"><a href="logout.html">
-  <i class ="fa fa-sign-out-alt"></i> <span>  Logout
-  </a></li> </span>
-  </ul>
-      </nav>
-    </div>
-    
-<!-- Main Content -->
-
-<div id="dashboard" class="dashboard">
-   <div class="main-content" >
-    <header class="welcome-title">
-    <h1>PATIENT'S DASHBOARD</h1>
-    <h2>Welcome to Your Dashboard!</h2>
-    </header>
-<!--Health Metrics section-->    
-     <div class="main-page">         
-      <div class="metrics-section">
-        <div class="metric-card">
-          <i class ="fas fa-heartbeat" style="color : red;"></i>
-          <h4>80 BPM</h4>
-          <p>Heart Rate</p>
-        </div>
-        <div class="metric-card">
-          <i class ="fas fa-lungs" style="color : violet"></i>
-          <h4>45%</h4>
-          <p>Blood Oxygen</p>
-        </div>
-        <div class="metric-card">
-          <i class ="fas fa-tachometer-alt" style="color : rgb(219, 163, 83)"></i>
-          <h4>120/80 mmHg</h4>
-          <p>Blood Pressure</p>
-        </div>
-        <div class="metric-card">
-          <i class ="fas fa-thermometer-half" style="color : rgb(9, 157, 123)"></i>
-          <h4>50°C</h4>
-          <p>Temperature</p>
-        </div>
-      </div>
-        <div id="realTimeAlerts" class="real-time-alerts">
-        <h2> RECENT ALERTS</h2>
-          <ul>
-          <li class="alert-item alert-warning"> Heart rate elevated: 120 bpm</li>
-          <li class="alert-item alert-danger"> ECG abnormal reading detected</li>
-          <li class="alert-item alert-info"> Next check-up due in 3 days</li>
-          </ul>
-        </div>
-   </div> 
-</div>
-
- <!--Report Section (Footer)-->
-        <div class ="report-section">
-            <p>Visit the <a href="report.html">
-            Report Section</a> for detailed metrics and trends</p>
-        <footer class="dashboard-footer">
-          <p>&copy; 2025 Health Monitor All Rights Reserved.</p>
-          <a href="#">Privacy Policy</a>
-        </footer>
-          </div>
-  </div>
-</div>
-<script>
-
-
-// Sidebar Toggle Functionality
-
-document.addEventListener("DOMContentLoaded", function () {
-    const sidebar = document.getElementById("sidebar");
-    const toggleButton = document.getElementById("togglebtn");
-    const dashboard = document.getElementById("dashboard");
-
-    toggleButton.addEventListener("click", function () {
-        sidebar.classList.toggle("closed");
-        dashboard.classList.toggle("moved");
-    });
-});
-// Mock Data Fallback (if API fails)
-const mockHealthMetrics = {
-  heartRate: "Loading...",
-  bloodOxygen: "Loading...",
-  bodyTemp: "Loading...",
-  bloodPressure: "Loading...",
-};
-
-// Function to Fetch Health Metrics from API
-async function fetchHealthMetrics() {
-  try {
-    // STEP 1: Replace this URL with your backend API endpoint
-    const apiUrl = "https://your-backend-api.com/health-metrics";
-
-    // STEP 2: Fetch data from the API
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error("Failed to fetch health metrics");
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio Page</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
-    // STEP 3: Parse the JSON response
-    const data = await response.json();
-    console.log("Fetched health metrics:", data);
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 700px;
+      padding: 2rem;
+      text-align: center;
+    }
 
-    // STEP 4: Update UI with the fetched data
-    updateHealthMetricsUI(data);
-  } catch (error) {
-    console.error("Error fetching health metrics. Using mock data:", error);
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #818CF8;
+    }
 
-    // STEP 5: If API fails, use dynamic mock data
-    updateMockHealthMetrics();
-  }
-}
+    h1 {
+      margin-top: 1rem;
+      color: #4F46E5;
+    }
 
-// Function to Generate Dynamic Health Metrics (Mock Data)
-function updateMockHealthMetrics() {
-  // STEP 6: Generate random mock data
-  const heartRate = Math.floor(Math.random() * 40) + 60; // Random heart rate between 60 and 100
-  const bloodOxygen = Math.floor(Math.random() * 5) + 95; // Random blood oxygen between 95% and 100
-  const bodyTemp = (Math.random() * 1.5 + 36.5).toFixed(1); // Random body temperature between 36.5°C and 38°C
-  const bloodPressure = `${Math.floor(Math.random() * 40) + 110}/${Math.floor(Math.random() * 20) + 70}`; // Random BP between 110/70 and 150/90
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
 
-  // STEP 7: Prepare mock data object
-  const mockData = {
-    heartRate: `${heartRate} bpm`,
-    bloodOxygen: `${bloodOxygen}%`,
-    bodyTemp: `${bodyTemp}°C`,
-    bloodPressure: `bloodPressure`,
-  };
+    h2 {
+      margin-top: 1.5rem;
+      color: #6366F1;
+    }
 
-  // STEP 8: Update the UI with mock data
-  updateHealthMetricsUI(mockData);
-}
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
 
-// Function to Update UI with Health Metrics
-function updateHealthMetricsUI(metrics) {
-  // STEP 9: Ensure IDs in HTML match the ones here
-  document.getElementById("heartRate").innerText = metrics.heartRate || "N/A";
-  document.getElementById("bloodOxygen").innerText = metrics.bloodOxygen || "N/A";
-  document.getElementById("bodyTemp").innerText = metrics.bodyTemp || "N/A";
-  document.getElementById("bloodPressure").innerText = metrics.bloodPressure || "N/A";
-}
+    li {
+      background: #E0E7FF;
+      margin: 0.5rem 0;
+      padding: 0.6rem;
+      border-radius: 8px;
+    }
 
-// Periodically Fetch or Update Metrics
-function initializeHealthMetrics() {
-  // STEP 10: Fetch health metrics every 10 minutes
-  setInterval(fetchHealthMetrics, 10 * 60 * 1000);
+    a {
+      display: inline-block;
+      margin-top: 1.5rem;
+      text-decoration: none;
+      background: #4F46E5;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
 
-  // STEP 11: Fetch initial health metrics
-  fetchHealthMetrics();
-}
+    a:hover {
+      background: #3730A3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://via.placeholder.com/120" alt="Profile Photo">
+    <h1>Yahaya Abubakar</h1>
+    <p>Hi, I'm Yahaya — a frontend developer passionate about creating fast, beautiful, and interactive web apps. I love combining clean design with powerful functionality.</p>
+    
+    <h2>My Favorite Technologies</h2>
+    <ul>
+      <li>React & React Native</li>
+      <li>Solana & Web3</li>
+      <li>Tailwind CSS</li>
+      <li>TypeScript</li>
+      <li>Node.js</li>
+    </ul>
 
-// Initialize the application
-initializeHealthMetrics();
-
-// Update metrics every 10 seconds
-setInterval(updateHealthMetrics, 10000);
-updateHealthMetrics(); // Initial load of metrics
-
-</script>
+    <a href="https://www.solana.com" target="_blank">Visit Solana Website</a>
+  </div>
 </body>
 </html>
